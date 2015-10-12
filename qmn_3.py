@@ -11,13 +11,14 @@ print "Tester for Qmn class"
 
 Testnumber = 1
 
-q2_2 = Qmn.Qnumber(2,2)
-q2_2.fromString("0b0")
-assert 0 == q2_2.value , "Testnumber {} failed:".format(Testnumber)
+q = Qmn.Qnumber(2,2)
+q.prettyPrintt()
+q.fromString("0b0")
+assert 0 == q.value , "Testnumber {} failed:".format(Testnumber)
 
 
 
-q2_2.fromString("0b0101")
+q.fromString("0b0101")
 
 
 

@@ -9,13 +9,11 @@ import unittest
 import qmn_2 as Qmn
 
 class Test_q2_2_Basics(unittest.TestCase):
-    @classmethod
-    def setUpClass(self):
+    def setUp(self):
         self.q = Qmn.Qnumber(2,2)
 
-    @classmethod
-    def tearDownClass(self):
-        self.q.destroy()
+    def tearDown(self):
+        self.q = -1
         
     def test_q2_2__b0000(self):
         self.q.fromString("0b0")
@@ -43,13 +41,11 @@ class Test_q2_2_Basics(unittest.TestCase):
         self.assertEqual(1.25 , self.q.value )
 
 class Test_q8_0_Basics(unittest.TestCase):
-    @classmethod
-    def setUpClass(self):
+    def setUp(self):
         self.q = Qmn.Qnumber(8,0)
 
-    @classmethod
-    def tearDownClass(self):
-        self.q.destroy()
+    def tearDown(self):
+        self.q = -1
         
     def test_q8_0_x00(self):
         self.q.fromString("0x00")
@@ -65,14 +61,11 @@ class Test_q8_0_Basics(unittest.TestCase):
             self.q.fromString("0x100")
 
 class Test_q32_0_Basics(unittest.TestCase):
-    @classmethod
-    def setUpClass(self):
+    def setUp(self):
         self.q = Qmn.Qnumber(32,0)
 
-    @classmethod
-    def tearDownClass(self):
-        self.q.destroy()
-        
+    def tearDown(self):
+        self.q = -1
         
     def test_q32_0_x00(self):
         self.q.fromString("0x00")
