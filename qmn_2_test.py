@@ -223,6 +223,86 @@ class Test_q_2_n1_Basics(unittest.TestCase):
         with self.assertRaises(AssertionError):
             self.q.FromRawString("010")
 
+
+
+class Test_q_n1_3_Basics(unittest.TestCase):
+    def setUp(self):
+        self.q = Qmn.Qunsigned(-1,3)
+
+    def tearDown(self):
+        self.q = None
+        
+    def test_basic(self):
+        self.q.FromRawString("0b00")
+        self.assertEqual( 0.125, self.q.resolution )
+        self.assertEqual(   0  , self.q.min )
+        self.assertEqual( 0.375 , self.q.max )
+        
+    def test_x0(self):
+        self.q.FromRawString("0x0")
+        self.assertEqual(0 , self.q.value )
+    def test_x1(self):
+        self.q.FromRawString("0x1")
+        self.assertEqual(0.125 , self.q.value )
+    def test_d1(self):
+        self.q.FromRawString("0d1")
+        self.assertEqual(0.125 , self.q.value )
+    def test_d2(self):
+        self.q.FromRawString("0d2")
+        self.assertEqual(0.25 , self.q.value )
+    def test_d3(self):
+        self.q.FromRawString("0d3")
+        self.assertEqual(0.375 , self.q.value )
+    def test_d4(self):
+        with self.assertRaises(AssertionError):
+            self.q.FromRawString("0d4")
+    def test_x4(self):
+        with self.assertRaises(AssertionError):
+            self.q.FromRawString("0x4")
+    def test_b101(self):
+        with self.assertRaises(AssertionError):
+            self.q.FromRawString("0b101")
+
+
+'''
+class Test_q_3_n1_Basics(unittest.TestCase):
+    def setUp(self):
+        self.q = Qmn.Qunsigned(3,-1)
+
+    def tearDown(self):
+        self.q = None
+        
+    def test_basic(self):
+        self.q.FromRawString("0b0")
+        self.assertEqual(   2  , self.q.resolution )
+        self.assertEqual(   0  , self.q.min )
+        self.assertEqual(   6  , self.q.max )
+        
+    def test_x0(self):
+        self.q.FromRawString("0x0")
+        self.assertEqual(0 , self.q.value )
+    def test_x1(self):
+        self.q.FromRawString("0x1")
+        self.assertEqual( 2 , self.q.value )
+    def test_d1(self):
+        self.q.FromRawString("0d1")
+        self.assertEqual(2 , self.q.value )
+    def test_d2(self):
+        self.q.FromRawString("0d2")
+        self.assertEqual(2 , self.q.value )
+    def test_d3(self):
+        self.q.FromRawString("0d1")
+        self.assertEqual(2 , self.q.value )
+    def test_d4(self):
+        with self.assertRaises(AssertionError):
+            self.q.FromRawString("0d2")
+    def test_x2(self):
+        with self.assertRaises(AssertionError):
+            self.q.FromRawString("0x2")
+    def test_b10(self):
+        with self.assertRaises(AssertionError):
+            self.q.FromRawString("010")
+ '''           
 # Q-1.3
 # Q-4.?4
 # Q3.-1
