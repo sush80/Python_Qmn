@@ -6,19 +6,43 @@ Created on Tue Oct  6 15:39:44 2015
 """
 
 '''
-Example 
+### EXAMPLE 
 m.n 
 2.2
 
 2^1  2^0  2^-1  2^-2
+  2    1   1/2  1/4
   2    1   0,5  0,25
 
 Max = 2+1+0,5+0,25 = 3,75
     = 2^(m)-2^(-n) = 2^2-2^-2 = 4 - 0,25 = 3,75
 Min = 2^(-n) = 0,25
 
-'''
 
+### EXAMPLE
+m.n
+0.4
+2^-1  2^-2  2^-3  2^-4
+1/2   1/4   1/8   1/16   
+0,5   0,25  0,125 ...
+
+Max = 1/2 + 1/4 + 1/8 + 1/16   = (1+2+4+8)/16 = 15/16
+    = 2^(m)-2^(-n) = 2^0-2^-4 = 1 - (1/16) = 15/16
+Min = 2^(-n) = 1/16
+
+### EXAMPLE
+ on negative m or n: 
+ m.n
+-1.5
+Total of 4 bits!
+2^-2  2^-3  2^-4  2^-5 
+1/4   1/8   1/16  1/32
+
+Max = 1/4 + 1/8 + 1/16 + 1/32  = (1+2+4+8)/32 = 15/32 = 0.4687
+    = 2^(m)-2^(-n) = 2^2-2^-4 = 1 - (1/16) =  0.4687
+Min = 2^(-n) = 1/32
+
+'''
 
 class Qunsigned:
     'Number to deal with fix point comma numbers'
@@ -70,9 +94,13 @@ class Qunsigned:
         temp = "{0:b}".format(rawInteger)  
         assert len(temp) <= (self._m+self._n)  , "Number exceeds Qmn size"
         
-        self._rawValue = rawInteger    
-        self._rawInteger = self._rawValue >> self._n
-        self._rawFractional = self._rawValue & (~(self._rawInteger << self._n))        
+        self._rawValue = rawInteger 
+        if self._n >= 0:
+            self._rawInteger = self._rawValue >> self._n
+            self._rawFractional = self._rawValue & (~(self._rawInteger << self._n)) 
+        else:
+            self._rawInteger = self._rawValue << (-self._n)
+            self._rawFractional = self._rawValue & (~(self._rawInteger >> (-self._n))) 
         self._value = self._rawInteger + (self._rawFractional * self._resolution)  
         
         
@@ -94,7 +122,7 @@ class Qunsigned:
         
         
     
-    def FromString(self, valueString):
+    def FromRawString(self, valueString):
         'valueString: number with the corresponding prefix (0x 0d 0b)'
         #Sanity Checks
         assert "0" == valueString[0]  , "Prefix 0 missing"
