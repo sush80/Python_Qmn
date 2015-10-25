@@ -50,6 +50,7 @@ class Qunsigned:
         self._m = m
         self._n = n
         self._bitLen = m+n
+        assert self._bitLen > 0  , "Bitlen (m+n) must be > 0"
         self._resolution = pow(2,-self._n)
         self._max = pow(2,self._m) - self._resolution
         self._verbose = verbose
@@ -74,18 +75,33 @@ class Qunsigned:
         return 0         
    
         
-    def PrettyPrintt(self):
-        print "Qunsigned {}.{}".format(self._m, self._n)
-        print " Resolution = 2^-{}".format(self._n)
-        print "              = {}".format(self._resolution)
-        print " Max          = {}".format(self._max)
-        print  " Raw Value  0d{}".format(self._rawValue)        
-        print  "            0x{:X}".format(self._rawValue)
-        temp = "            0b{:0" + str(self._bitLen) + "b}"
+    def PrettyPrint(self):
+        print  "Qunsigned  {}.{}".format(self._m, self._n)
+        print  "+ Resolution = 2^-{}".format(self._n)
+        print  "+            = {}".format(self._resolution)
+        print  "+ Max....... = {}".format(self._max)
+        print  "+ Raw Value  0d{}".format(self._rawValue)        
+        print  "+            0x{:X}".format(self._rawValue)
+        temp = "+            0b{:0" + str(self._bitLen) + "b}"
         print temp.format(self._rawValue)
-        print  " Value      0d{}".format(self._value)
-        temp = "            0b{:0" + str(self._m) + "b}.{:0" + str(self._n) + "b}"
-        print temp.format(self._rawInteger, self._rawFractional)
+        print  "+ Value......0d{}".format(self._value)
+        if (self._m > 0) and (self._n > 0):
+            temp = "+            0b{:0" + str(self._m) + "b}.{:0" + str(self._n) + "b}"
+            print temp.format(self._rawInteger, self._rawFractional)
+        elif self._m == 0 :
+            assert self._rawInteger == 0 , "sanity test"
+            temp = "+            0b.{:0" + str(self._n) + "b}"
+            print temp.format(self._rawFractional)
+        elif self._n == 0 :
+            assert self._rawFractional == 0 , "sanity test"
+            temp = "+            0b{:0" + str(self._m) + "b}"
+            print temp.format(self._rawInteger)
+        elif self._m  < 0:
+            print "+             FIXME binary representation"
+        elif self._n  < 0:
+            print "+             FIXME binary representation"
+        else:
+            assert False , "Should never happen"
         
         
     
@@ -123,7 +139,24 @@ class Qunsigned:
         
     
     def FromRawString(self, valueString):
-        'valueString: number with the corresponding prefix (0x 0d 0b)'
+        """
+        Given two numbers a and b, return their average value.
+    
+        Parameters
+        ----------
+        valueString : String
+          number with the corresponding prefix (0x 0d 0b)
+    
+        Returns
+        -------
+        nothing
+    
+        Example
+        -------
+        >>> q.FromRawString("0b1111")
+        
+    
+        """
         #Sanity Checks
         assert "0" == valueString[0]  , "Prefix 0 missing"
         assert len(valueString) >= 3  , "Number with prefix too short"

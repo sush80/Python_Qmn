@@ -36,6 +36,7 @@ class Test_q2_2_Basics(unittest.TestCase):
     def test_xF(self):
         self.q.FromRawString("0xF")
         self.assertEqual(3.75 , self.q.value )
+        self.q.PrettyPrint()
     def test_x0(self):
         self.q.FromRawString("0x0")
         self.assertEqual(0 , self.q.value )
@@ -45,6 +46,7 @@ class Test_q2_2_Basics(unittest.TestCase):
     def test_x5(self):
         self.q.FromRawString("0x5")
         self.assertEqual(1.25 , self.q.value )
+
 
 class Test_q1_0_Basics(unittest.TestCase):
     def setUp(self):
@@ -68,6 +70,7 @@ class Test_q1_0_Basics(unittest.TestCase):
     def test_d1(self):
         self.q.FromRawString("0d1")
         self.assertEqual(1 , self.q.value )
+        self.q.PrettyPrint()
     def test_d2(self):
         with self.assertRaises(AssertionError):
             self.q.FromRawString("0d2")
@@ -77,6 +80,7 @@ class Test_q1_0_Basics(unittest.TestCase):
     def test_b10(self):
         with self.assertRaises(AssertionError):
             self.q.FromRawString("010")
+
 
 class Test_q0_1_Basics(unittest.TestCase):
     def setUp(self):
@@ -97,6 +101,7 @@ class Test_q0_1_Basics(unittest.TestCase):
     def test_x1(self):
         self.q.FromRawString("0x1")
         self.assertEqual(0.5 , self.q.value )
+        self.q.PrettyPrint()
     def test_d1(self):
         self.q.FromRawString("0d1")
         self.assertEqual(0.5 , self.q.value )
@@ -109,6 +114,7 @@ class Test_q0_1_Basics(unittest.TestCase):
     def test_b10(self):
         with self.assertRaises(AssertionError):
             self.q.FromRawString("010")
+
 
 class Test_q8_0_Basics(unittest.TestCase):
     def setUp(self):
@@ -129,12 +135,14 @@ class Test_q8_0_Basics(unittest.TestCase):
     def test_x01(self):
         self.q.FromRawString("0x01")
         self.assertEqual(1 , self.q.value )
+        self.q.PrettyPrint()
     def test_x80(self):
         self.q.FromRawString("0x80")
         self.assertEqual(128 , self.q.value )
     def test_x100(self):
         with self.assertRaises(AssertionError):
             self.q.FromRawString("0x100")
+
 
 class Test_q32_0_Basics(unittest.TestCase):
     def setUp(self):
@@ -149,6 +157,7 @@ class Test_q32_0_Basics(unittest.TestCase):
     def test_x01(self):
         self.q.FromRawString("0x01")
         self.assertEqual(1 , self.q.value )
+        self.q.PrettyPrint()
     def test_x80(self):
         self.q.FromRawString("0x80")
         self.assertEqual(128 , self.q.value )
@@ -177,6 +186,7 @@ class Test_q_n1_2_Basics(unittest.TestCase):
     def test_x1(self):
         self.q.FromRawString("0x1")
         self.assertEqual(0.25 , self.q.value )
+        self.q.PrettyPrint()
     def test_d1(self):
         self.q.FromRawString("0d1")
         self.assertEqual(0.25 , self.q.value )
@@ -188,7 +198,7 @@ class Test_q_n1_2_Basics(unittest.TestCase):
             self.q.FromRawString("0x2")
     def test_b10(self):
         with self.assertRaises(AssertionError):
-            self.q.FromRawString("010")
+            self.q.FromRawString("0b10")
 
 
 class Test_q_2_n1_Basics(unittest.TestCase):
@@ -210,6 +220,7 @@ class Test_q_2_n1_Basics(unittest.TestCase):
     def test_x1(self):
         self.q.FromRawString("0x1")
         self.assertEqual( 2 , self.q.value )
+        self.q.PrettyPrint()
     def test_d1(self):
         self.q.FromRawString("0d1")
         self.assertEqual(2 , self.q.value )
@@ -221,7 +232,7 @@ class Test_q_2_n1_Basics(unittest.TestCase):
             self.q.FromRawString("0x2")
     def test_b10(self):
         with self.assertRaises(AssertionError):
-            self.q.FromRawString("010")
+            self.q.FromRawString("0b10")
 
 
 
@@ -244,6 +255,7 @@ class Test_q_n1_3_Basics(unittest.TestCase):
     def test_x1(self):
         self.q.FromRawString("0x1")
         self.assertEqual(0.125 , self.q.value )
+        self.q.PrettyPrint()
     def test_d1(self):
         self.q.FromRawString("0d1")
         self.assertEqual(0.125 , self.q.value )
@@ -264,7 +276,7 @@ class Test_q_n1_3_Basics(unittest.TestCase):
             self.q.FromRawString("0b101")
 
 
-'''
+
 class Test_q_3_n1_Basics(unittest.TestCase):
     def setUp(self):
         self.q = Qmn.Qunsigned(3,-1)
@@ -284,25 +296,26 @@ class Test_q_3_n1_Basics(unittest.TestCase):
     def test_x1(self):
         self.q.FromRawString("0x1")
         self.assertEqual( 2 , self.q.value )
+        self.q.PrettyPrint()
     def test_d1(self):
         self.q.FromRawString("0d1")
         self.assertEqual(2 , self.q.value )
     def test_d2(self):
         self.q.FromRawString("0d2")
-        self.assertEqual(2 , self.q.value )
+        self.assertEqual(4 , self.q.value )
     def test_d3(self):
-        self.q.FromRawString("0d1")
-        self.assertEqual(2 , self.q.value )
+        self.q.FromRawString("0d3")
+        self.assertEqual(2+4 , self.q.value )
     def test_d4(self):
         with self.assertRaises(AssertionError):
-            self.q.FromRawString("0d2")
-    def test_x2(self):
+            self.q.FromRawString("0d4")
+    def test_x4(self):
         with self.assertRaises(AssertionError):
-            self.q.FromRawString("0x2")
-    def test_b10(self):
+            self.q.FromRawString("0x4")
+    def test_b101(self):
         with self.assertRaises(AssertionError):
-            self.q.FromRawString("010")
- '''           
+            self.q.FromRawString("0b101")
+        
 # Q-1.3
 # Q-4.?4
 # Q3.-1
