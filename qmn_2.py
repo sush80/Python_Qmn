@@ -53,7 +53,7 @@ class Qunsigned:
         self._bitLen = m+n
         self._resolution = pow(2,-self._n)
         self._max = pow(2,self._m) - self._resolution
-        self.FromRawInteger(0)
+        self.FromRaw(0)
    
     @property
     def value(self):
@@ -190,6 +190,8 @@ class Qunsigned:
         Returns
         -------
         The Error Difference due to internal representation (floatIn - Qmn.value)
+        The returned error might look odd because on floating point calculation issues not solved here
+        e.g. 2.26 - 2.25 = 0.00999999999999978
     
         Example
         -------
@@ -203,7 +205,6 @@ class Qunsigned:
         self._value = None
         
         temp = floatIn / self._resolution
-        self.FromRawInteger(int(round(temp)))
-        return 3
-        #return (floatIn - self._value)
+        self.FromRaw(int(round(temp)))
+        return (floatIn - self._value)
    

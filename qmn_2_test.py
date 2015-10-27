@@ -48,8 +48,39 @@ class Test_q2_2_Basics(unittest.TestCase):
         self.assertEqual(1.25 , self.q.value )
     def test_float_0(self):
         errReturn = self.q.FromFloating(0.0)
-        #self.assertEqual(0 , errReturn )
-        #self.assertEqual(0 , self.q.value )
+        self.assertEqual(0 , self.q.value )
+        self.assertEqual(0 , errReturn )
+    def test_float_0_5(self):
+        errReturn = self.q.FromFloating(0.5)
+        self.assertEqual(0.5 , self.q.value )
+        self.assertEqual(0 , errReturn )
+    def test_float_2_5(self):
+        errReturn = self.q.FromFloating(2.5)
+        self.assertEqual(2.5 , self.q.value )
+        self.assertEqual(0 , errReturn )
+    def test_float_2_25(self):
+        errReturn = self.q.FromFloating(2.25)
+        self.assertEqual(2.25 , self.q.value )
+        self.assertEqual(0 , errReturn )
+    def test_float_2_75(self):
+        errReturn = self.q.FromFloating(2.75)
+        self.assertEqual(2.75 , self.q.value )
+        self.assertEqual(0 , errReturn )
+    def test_float_2_26(self):
+        errReturn = self.q.FromFloating(2.26)
+        self.assertEqual(2.25 , self.q.value )
+        self.assertAlmostEqual(0.01 , errReturn , 3)
+        self.assertLess(errReturn , self.q.resolution)
+    def test_float_2_49(self):
+        errReturn = self.q.FromFloating(2.49)
+        self.assertEqual(2.50 , self.q.value )
+        self.assertAlmostEqual(-0.01 , errReturn , 3)
+        self.assertLess(errReturn , self.q.resolution)
+    def test_float_0_12(self):
+        errReturn = self.q.FromFloating(0.124999999999)
+        self.assertEqual(0.00 , self.q.value )
+        self.assertAlmostEqual(0.125 , errReturn , 3)
+        self.assertLess(errReturn , self.q.resolution)
 
 
 class Test_q1_0_Basics(unittest.TestCase):
