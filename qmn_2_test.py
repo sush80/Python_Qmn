@@ -46,6 +46,10 @@ class Test_q2_2_Basics(unittest.TestCase):
     def test_x5(self):
         self.q.FromRawString("0x5")
         self.assertEqual(1.25 , self.q.value )
+    def test_float_0(self):
+        errReturn = self.q.FromFloating(0.0)
+        #self.assertEqual(0 , errReturn )
+        #self.assertEqual(0 , self.q.value )
 
 
 class Test_q1_0_Basics(unittest.TestCase):
@@ -315,7 +319,7 @@ class Test_q_3_n1_Basics(unittest.TestCase):
     def test_b101(self):
         with self.assertRaises(AssertionError):
             self.q.FromRawString("0b101")
-        
+            
 # Q-1.3
 # Q-4.?4
 # Q3.-1
