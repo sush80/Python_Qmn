@@ -6,7 +6,7 @@ Created on Thu Oct  8 16:43:36 2015
 """
 
 import unittest
-import qmn_2 as Qmn
+import Qunsigned as Qmn
 
 class Test_q2_2_Basics(unittest.TestCase):
     def setUp(self):
