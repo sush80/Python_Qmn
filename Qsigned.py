@@ -30,7 +30,7 @@ class Qsigned:
         assert (m+n) > 0  , "Bitlen (m+n) must be > 0"
         self._m = m
         self._n = n
-        self._bitLen = m+n+1
+        self._bitLen = m+n
         self._resolution = pow(2,-self._n)
         self._max = pow(2,self._m - 1) - self._resolution
         self.FromRaw(0)
@@ -49,7 +49,7 @@ class Qsigned:
         
     @property
     def min(self):
-        return -self._max        
+        return -self._max - self._resolution      
    
         
     def PrettyPrint(self):
@@ -105,15 +105,24 @@ class Qsigned:
         #Sanity Checks        
         temp = "{0:b}".format(raw)  
         assert len(temp) <= (self._m+self._n)  , "Number exceeds Qmn size"
-        
         self._rawValue = raw 
-        if self._n >= 0:
+        
+        self._rawSignbit = 0
+        if 0 != raw & pow(2,self._bitLen -1):
+            self._rawSignbit = 1
+        
+        
+        if 0 != self._rawSignbit:
+            #highest bit set -> negative number
+            print "negative number detected"
+            temp = raw & (~pow(2,self._bitLen -1))
+            self._rawInteger = temp >> self._n
+            self._rawFractional = temp & (~(self._rawInteger << self._n)) 
+            self._value = self.min + (self._rawInteger + (self._rawFractional * self._resolution) )
+        else:
             self._rawInteger = self._rawValue >> self._n
             self._rawFractional = self._rawValue & (~(self._rawInteger << self._n)) 
-        else:
-            self._rawInteger = self._rawValue << (-self._n)
-            self._rawFractional = self._rawValue & (~(self._rawInteger >> (-self._n))) 
-        self._value = self._rawInteger + (self._rawFractional * self._resolution)  
+            self._value = self._rawInteger + (self._rawFractional * self._resolution)  
         
 
         
@@ -179,6 +188,8 @@ class Qsigned:
         >>> FromFloating(0.12)
         >>> FromFloating(1.222)
         >>> FromFloating(123.456)
+        >>> FromFloating(-123.456)
+        >>> FromFloating(+123.456)
     
         """        
         
