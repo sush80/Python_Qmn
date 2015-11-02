@@ -8,19 +8,30 @@ Created on Tue Oct  6 15:39:44 2015
 '''
 ### EXAMPLE 
 m.n 
-2.2 -> 3 data bits + 1 sign bit = 4bits Datatype
+2.1 -> 2 data bits + 1 sign bit = 3bits Datatype
 
-2^1       2^0  2^-1  2^-2
-SignBit    1   1/2  1/4
-           1   0,5  0,25
 
-Max = 1+0,5+0,25 = 1,75
-    = 2^(m-1)-2^(-n) = 2^(2-1) - 2^-2 = 2 - 0,25 = 1,75
-Min = - 1,75
+2^1       2^0  2^-1 
+SignBit    1   1/2
+           1   0,5
+
+Max = 1+0,5 = 1,5
+    = 2^(m-1)-2^(-n) = 2^(2-1) - 2^-1 = 2 - 0,5 = 1,5
+Min = -(2^(-1)m)
 Resolution = 2^(-n) = 0,25
 
 
 
+
+			Qs3.0	 Qs2.1	  Qs1.2	
+0	0	0	 0	 0	  0	
+0	0	1	 1	 0,5	  0,25    Resolution
+0	1	0	 2	 1	  0,5	
+0	1	1	 3	 1,5	  0,75	    MAX
+1	0	0	-4	-2	 -1	    MIN
+1	0	1	-3	-1,5	 -0,75	
+1	1	0	-2	-1	 -0,5	
+1	1	1	-1	-0,5	 -0,25	
 
 '''
 
@@ -33,6 +44,8 @@ class Qsigned:
         self._bitLen = m+n
         self._resolution = pow(2,-self._n)
         self._max = pow(2,self._m - 1) - self._resolution
+        #self._min = -self._max - self._resolution 
+        self._min = -pow(2,self._m -1)  
         self.FromRaw(0)
    
     @property
@@ -49,7 +62,7 @@ class Qsigned:
         
     @property
     def min(self):
-        return -self._max - self._resolution      
+        return self._min    
    
         
     def PrettyPrint(self):
@@ -57,6 +70,7 @@ class Qsigned:
         print  "+ Resolution = 2^-{}".format(self._n)
         print  "+            = {}".format(self._resolution)
         print  "+ Max....... = {}".format(self._max)
+        print  "+ Min....... = {}".format(self._min)
         print  "+ Raw Value  0d{}".format(self._rawValue)        
         print  "+            0x{:X}".format(self._rawValue)
         temp = "+            0b{:0" + str(self._bitLen) + "b}"
