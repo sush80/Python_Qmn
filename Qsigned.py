@@ -38,7 +38,8 @@ Resolution = 2^(-n) = 0,25
 class Qsigned:
     'Number to deal with fix point comma numbers'
     def __init__(self, m, n):
-        assert (m+n) > 0  , "Bitlen (m+n) must be > 0"
+        assert (m) > 0   ,   "m must be > 0"
+        assert (n) >= 0  , "n must be >= 0"
         self._m = m
         self._n = n
         self._bitLen = m+n
@@ -128,7 +129,7 @@ class Qsigned:
         
         if 0 != self._rawSignbit:
             #highest bit set -> negative number
-            print "negative number detected"
+            #print "negative number detected"
             temp = raw & (~pow(2,self._bitLen -1))
             self._rawInteger = temp >> self._n
             self._rawFractional = temp & (~(self._rawInteger << self._n)) 
