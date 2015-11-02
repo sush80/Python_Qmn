@@ -113,11 +113,11 @@ class Qsigned:
         Example
         -------
         >>> FromRaw(12345)
-        >>> FromRaw(-23)
         
     
         """
-        #Sanity Checks        
+        #Sanity Checks     
+        assert raw >= 0, "raw value cannot be negative"
         temp = "{0:b}".format(raw)  
         assert len(temp) <= (self._m+self._n)  , "Number exceeds Qmn size"
         self._rawValue = raw 
@@ -212,6 +212,12 @@ class Qsigned:
         self._value = None
         
         temp = floatIn / self._resolution
-        self.FromRaw(int(round(temp)))
+        if (floatIn >=0):
+            self.FromRaw(int(round(temp)))
+        else:
+            tempInt = int(round(temp))
+            tempInt = pow(2,self._bitLen) + tempInt
+            self.FromRaw(tempInt)
+            
         return (floatIn - self._value)
    
