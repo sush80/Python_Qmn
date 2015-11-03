@@ -199,10 +199,13 @@ class Qunsigned:
         >>> q.FromFloating(1.222)
         >>> q.FromFloating(123.456)
     
-        """        
+        """      
+        
+        assert floatIn <= self._max , "Input value out of range, must be <= max"
+        assert floatIn >= 0 , "Input value out of range, must be >= min"  
         
         self._rawValue = None
-        self._value = None
+        self._value = None        
         
         temp = floatIn / self._resolution
         self.FromRaw(int(round(temp)))

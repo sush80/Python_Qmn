@@ -81,6 +81,14 @@ class Test_q2_2_Basics(unittest.TestCase):
         self.assertEqual(0.00 , self.q.value )
         self.assertAlmostEqual(0.125 , errReturn , 3)
         self.assertLess(errReturn , self.q.resolution)
+        
+    def test_float_min(self):
+        with self.assertRaises(AssertionError):
+            self.q.FromFloating(-0.0001)
+        
+    def test_float_max(self):
+        with self.assertRaises(AssertionError):
+            self.q.FromFloating(+3.75001)
 
 
 class Test_q1_0_Basics(unittest.TestCase):
@@ -199,6 +207,35 @@ class Test_q32_0_Basics(unittest.TestCase):
     def test_x100(self):
         with self.assertRaises(AssertionError):
             self.q.FromRawString("0x100000000")
+
+
+class Test_q64_0_Basics(unittest.TestCase):
+    def setUp(self):
+        self.q = Qmn.Qunsigned(64,0)
+
+    def tearDown(self):
+        self.q = None
+        
+        
+    def test_basic(self):
+        self.q.FromRawString("0b0")
+        self.assertEqual(   1 , self.q.resolution )
+        self.assertEqual(   pow(2,64) -1 , self.q.max )
+        self.assertEqual(  0    , self.q.min )
+        self.q.PrettyPrint()
+    def test_x00(self):
+        self.q.FromRawString("0x00")
+        self.assertEqual(0 , self.q.value )
+    def test_x01(self):
+        self.q.FromRawString("0x01")
+        self.assertEqual(1 , self.q.value )
+        self.q.PrettyPrint()
+    def test_x80(self):
+        self.q.FromRawString("0x80")
+        self.assertEqual(128 , self.q.value )
+    def test_x100(self):
+        with self.assertRaises(AssertionError):
+            self.q.FromRawString("0x10000000000000000")
 
 
 

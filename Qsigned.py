@@ -77,23 +77,7 @@ class Qsigned:
         temp = "+            0b{:0" + str(self._bitLen) + "b}"
         print temp.format(self._rawValue)
         print  "+ Value......0d{}".format(self._value)
-        if (self._m > 0) and (self._n > 0):
-            temp = "+            0b{:0" + str(self._m) + "b}.{:0" + str(self._n) + "b}"
-            print temp.format(self._rawInteger, self._rawFractional)
-        elif self._m == 0 :
-            assert self._rawInteger == 0 , "sanity test"
-            temp = "+            0b.{:0" + str(self._n) + "b}"
-            print temp.format(self._rawFractional)
-        elif self._n == 0 :
-            assert self._rawFractional == 0 , "sanity test"
-            temp = "+            0b{:0" + str(self._m) + "b}"
-            print temp.format(self._rawInteger)
-        elif self._m  < 0:
-            print "+             FIXME binary representation"
-        elif self._n  < 0:
-            print "+             FIXME binary representation"
-        else:
-            assert False , "Should never happen"
+        
         
         
     
@@ -208,9 +192,12 @@ class Qsigned:
     
         """        
         
+        assert floatIn <= self._max , "Input value out of range, must be <= max"
+        assert floatIn >= self._min , "Input value out of range, must be >= min"
+        
         self._rawValue = None
         self._value = None
-        
+
         temp = floatIn / self._resolution
         if (floatIn >=0):
             self.FromRaw(int(round(temp)))
