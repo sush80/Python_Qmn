@@ -2,7 +2,7 @@
 """
 Created on Thu Oct  8 16:43:36 2015
 
-@author: sush
+@author: Anyuser
 """
 
 import unittest
@@ -301,6 +301,10 @@ class Test_q1_2_Basics(unittest.TestCase):
         testFloat = -0.9
         self.q.FromFloating(testFloat)
         self.assertEqual(-1.0 , self.q.value )
+        
+    def test_n2(self):
+        with self.assertRaises(AssertionError):
+            self.q.FromFloating(-2.0)
     
  
  
